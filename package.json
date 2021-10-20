@@ -2,10 +2,11 @@
   "name": "template",
   "version": "0.0.1",
   "description": "Game template using phaser 3 (v.3.50+), webpack 5, typescript and spine animation (v.3.8+)",
-  "main": "src/js/index.ts",
+  "main": "src/ts/index.ts",
   "scripts": {
     "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "lint": "eslint --ext .js --ext .ts --ignore-path .eslintignore . --fix"
   },
   "author": "Dmytro Parubochyi",
   "babel": {
@@ -19,6 +20,13 @@
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^8.1.1",
     "file-loader": "^6.2.0",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "prettier": "^2.4.1",
     "html-webpack-plugin": "^5.3.1",
     "json-loader": "^0.5.7",
     "phaser": "^3.54.0",

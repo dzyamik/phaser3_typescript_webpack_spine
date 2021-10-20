@@ -12,7 +12,7 @@ Ensure you have [Node.js 14.17.3+ LTS](https://nodejs.org) installed.
 
 Clone this repo and `cd` to project directory.
 
-```
+```bash
 npm i
 ```
 
@@ -20,12 +20,18 @@ npm i
 
 Run the development server to preview locally at http://localhost:8080/.
 
-```
+```bash
 npm start
 ```
 
 Create a production build.
 
-```
+```bash
 npm run build
+```
+
+Validate code (static analizer)
+
+```bash
+npm run lint
 ```

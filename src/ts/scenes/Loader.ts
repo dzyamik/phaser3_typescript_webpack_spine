@@ -1,5 +1,4 @@
-import "phaser"
-
+import 'phaser'
 
 export default class Loader extends Phaser.Scene {
     elementsContainer: Phaser.GameObjects.Container
@@ -29,7 +28,6 @@ export default class Loader extends Phaser.Scene {
         this.load.on('complete', () => {
             console.log('Loading completed!')
         })
-
 
         // Images
         this.load.image('background', '../../assets/images/background.jpg')

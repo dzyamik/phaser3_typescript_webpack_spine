@@ -1,6 +1,6 @@
-import "phaser"
-import { IBackground } from "../constants/interfaces"
-import { Background } from "./components/Background"
+import 'phaser'
+import { IBackground } from '../constants/interfaces'
+import { Background } from './components/Background'
 
 export default class Game extends Phaser.Scene {
     private canInteract: boolean = true
@@ -8,14 +8,11 @@ export default class Game extends Phaser.Scene {
 
     backgroundContainer: IBackground
 
-
     constructor() {
         super('Game')
     }
 
-    preload() {
-
-    }
+    preload() {}
 
     create() {
         // Add Background
@@ -25,7 +22,5 @@ export default class Game extends Phaser.Scene {
         this.createFunctionsBind()
     }
 
-    createFunctionsBind(): void {
-
-    }
+    createFunctionsBind(): void {}
 }
