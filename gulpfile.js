@@ -4,9 +4,6 @@ const { series, src, dest, parallel } = require('gulp')
 const texturePacker = require('gulp-free-tex-packer')
 const audiosprite = require('audiosprite-ffmpeg')
 const through = require('through2')
-
-// const run2 = require('gulp-run')
-
 const del = require('del')
 
 let MAIN_GAME_PATH = '.'
@@ -301,23 +298,11 @@ function getDirectoryMap(cb) {
         })
 }
 
-// function runWebpackProd(cb) {
-//     run2('webpack --mode production').exec()
-//     cb()
-// }
-
-// function runWebpackDev(cb) {
-//     run2('webpack serve --mode development').exec()
-//     cb()
-// }
-
 // Exported tasks
 exports.buildAtlasesDist = buildAtlases
 exports.buildSoundsDist = buildSounds
 exports.getDirectoryMapDist = getDirectoryMap
 
-// exports.runWebpackProd = runWebpackProd
-// exports.runWebpackDev = runWebpackDev
 exports.copyAllDist = series(cleanDistFolder, copyAll)
 exports.copyAllDist = series(cleanDistFolder, copyAll)
 
@@ -325,5 +310,5 @@ exports.default = series(cleanDistFolder, copyAll, parallel(buildAtlases, buildS
 
 exports.assets = series(cleanDistFolder, copyAll, parallel(buildAtlases, buildSounds), getDirectoryMap)
 
-exports.production = series(cleanDistFolder, copyAll, buildAtlases, buildSounds, getDirectoryMap /*runWebpackProd*/)
-exports.development = series(cleanDistFolder, copyAll, parallel(buildAtlases, buildSounds), getDirectoryMap /*runWebpackDev*/)
+exports.production = series(cleanDistFolder, copyAll, buildAtlases, buildSounds, getDirectoryMap)
+exports.development = series(cleanDistFolder, copyAll, parallel(buildAtlases, buildSounds), getDirectoryMap)
