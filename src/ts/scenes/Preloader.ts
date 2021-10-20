@@ -1,4 +1,6 @@
 import 'phaser'
+import { ASSETS } from '../assets'
+import loader from '../utils/loader'
 
 export default class Preloader extends Phaser.Scene {
     constructor() {
@@ -6,7 +8,8 @@ export default class Preloader extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('backgroundPreloader', '../../assets/images/mainBG.jpg')
+        // this.load.image('backgroundPreloader', '../../assets/images/mainBG.jpg')
+        loader(this, 'preloading', ASSETS)
     }
 
     create() {

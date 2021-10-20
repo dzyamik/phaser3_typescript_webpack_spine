@@ -8,5 +8,6 @@
 yarn.lock
 
 **/*.d.ts
+**/assets.ts
 **/*.atlas
 **/*.json

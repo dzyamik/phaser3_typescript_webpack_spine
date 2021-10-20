@@ -4,6 +4,8 @@
   "description": "Game template using phaser 3 (v.3.50+), webpack 5, typescript and spine animation (v.3.8+)",
   "main": "src/ts/index.ts",
   "scripts": {
+    "build:assets": "gulp",
+    "start:all": "gulp development & webpack serve --mode development",
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "lint": "eslint --ext .js --ext .ts --ignore-path .eslintignore . --fix"
@@ -32,6 +34,13 @@
     "phaser": "^3.54.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.9",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-free-tex-packer": "^0.5.4",
+    "path": "^0.12.7",
+    "through2": "^4.0.2",
+    "audiosprite-ffmpeg": "^0.8.1",
+    "gulp-run": "^1.7.1",
     "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"
