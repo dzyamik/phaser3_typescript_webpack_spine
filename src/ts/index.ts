@@ -5,7 +5,7 @@ import Preloader from './scenes/Preloader'
 import Loader from './scenes/Loader'
 import Game from './scenes/Game'
 
-const GAME_WIDTH = 1980
+const GAME_WIDTH = 1920
 const GAME_HEIGHT = 1080
 
 const config: Phaser.Types.Core.GameConfig = {

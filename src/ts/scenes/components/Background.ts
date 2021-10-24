@@ -11,13 +11,10 @@ export class Background extends Phaser.GameObjects.Container implements IBackgro
 
     private createElements(): void {
         this.mainContainer = this.scene.add.container(0, 0)
+        const WIDTH = this.scene.sys.canvas.width
+        const HEIGHT = this.scene.sys.canvas.height
 
-        const background = this.scene.add
-            .image(this.scene.sys.canvas.width / 2, this.scene.sys.canvas.height / 2, 'background')
-            .setOrigin(0.5)
-            .setSize(this.scene.sys.canvas.width, this.scene.sys.canvas.height)
-        console.log(background, this.scene.sys.canvas.width, this.scene.sys.canvas.height)
-        // background.setSize(this.scene.sys.canvas.width, this.scene.sys.canvas.height)
+        const background = this.scene.add.image(WIDTH / 2, HEIGHT / 2, 'background').setOrigin(0.5)
 
         this.mainContainer.add([background])
     }

@@ -2,3 +2,7 @@
 export interface IBackground extends Phaser.GameObjects.Container {
     // TODO: implement any public functions
 }
+
+export interface IUI extends Phaser.GameObjects.Container {
+    // TODO: implement any public functions
+}
