@@ -32,7 +32,6 @@ export default class Loader extends Phaser.Scene {
         })
 
         // Images
-        // this.load.image('background', '../../assets/images/background.jpg')
         loader(this, 'loading', ASSETS)
     }
 
