@@ -4,9 +4,13 @@ import 'phaser/plugins/spine/dist/SpinePlugin'
 import Preloader from './scenes/Preloader'
 import Loader from './scenes/Loader'
 import Game from './scenes/Game'
+import { CommonUtils } from './utils/CommonUtils'
+import { TRANSITIONS } from './constants/transitions'
 
 const GAME_WIDTH = 1920
 const GAME_HEIGHT = 1080
+
+CommonUtils.init(TRANSITIONS)
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.WEBGL,

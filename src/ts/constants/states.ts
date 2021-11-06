@@ -1,0 +1,16 @@
+// these are the states
+export const States = {
+    INIT: 'INIT',
+    PRELOADING: 'PRELOADING',
+    LOADING: 'LOADING',
+
+    GAME_OPENING: 'GAME_OPENING',
+    GAME_OPENED: 'GAME_OPENED',
+
+    IDLE: 'IDLE',
+    START_SPIN: 'START_SPIN',
+    SPINNING: 'SPINNING',
+    STOP_SPIN: 'STOP_SPIN',
+    SPIN_STOPPED: 'SPIN_STOPPED',
+    PAYOUT: 'PAYOUT',
+}
