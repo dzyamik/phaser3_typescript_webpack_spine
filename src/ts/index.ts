@@ -13,7 +13,7 @@ const GAME_HEIGHT = 1080
 CommonUtils.init(TRANSITIONS)
 
 const config: Phaser.Types.Core.GameConfig = {
-    type: Phaser.WEBGL,
+    type: Phaser.AUTO,
     banner: false,
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
