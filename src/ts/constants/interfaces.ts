@@ -1,12 +1,30 @@
 // NOTE: if you change interfaces and get errors in console, stop rebuild and start it again
-export interface IBackground extends Phaser.GameObjects.Container {
+export interface IBase extends Phaser.GameObjects.Container {
+    // TODO: implement any public functions
+}
+export interface IBackground extends IBase {
     // TODO: implement any public functions
 }
 
-export interface IUI extends Phaser.GameObjects.Container {
+export interface IUI extends IBase {
     // TODO: implement any public functions
 }
 
+export interface IReelSymbol extends IBase {
+    // TODO: implement any public functions
+}
+
+export interface IReel extends IBase {
+    // TODO: implement any public functions
+}
+
+export interface IReelManager extends IBase {
+    // TODO: implement any public functions
+}
+
+export interface IMessages extends IBase {
+    // TODO: implement any public functions
+}
 export interface IEventDispatcher extends Phaser.Events.EventEmitter {
     getState: Function
 }
