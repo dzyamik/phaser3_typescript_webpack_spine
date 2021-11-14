@@ -21,6 +21,9 @@ export const EventsList = {
     addBet: 'addBet',
     reBet: 'reBet',
 
+    stopWinAnimation: 'stopWinAnimation',
+    startWinAnimation: 'startWinAnimation',
+
     errorInfo: 'errorInfo',
     playSound: 'playSound',
 

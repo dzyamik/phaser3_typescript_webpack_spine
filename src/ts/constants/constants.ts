@@ -13,5 +13,27 @@ export const CONSTANTS = {
             IDLE: 'btn_spin_idle.png',
             OVER: 'btn_spin_over.png',
         },
+        STOP: {
+            DISABLED: 'btn_skip_disabled.png',
+        },
+        MAX_BET: {
+            DISABLED: 'btn_maxbet_disabled.png',
+            DOWN: 'btn_maxbet_down.png',
+            IDLE: 'btn_maxbet_idle.png',
+            OVER: 'btn_maxbet_over.png',
+        },
+        MUTE: {
+            DISABLED: 'mute_disabled.png',
+            DOWN: 'mute_down.png',
+            IDLE: 'mute_idle.png',
+            OVER: 'mute_over.png',
+        },
+    },
+    SIZE: {
+        REELS_INIT_X: 350,
+        REELS_INIT_Y: 240,
+        REEL_WIDTH: 250,
+        REEL_HEIGHT: 218,
+        NUM_OF_REELS: 5,
     },
 }

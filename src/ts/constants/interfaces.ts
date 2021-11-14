@@ -2,6 +2,11 @@
 export interface IBase extends Phaser.GameObjects.Container {
     // TODO: implement any public functions
 }
+
+export interface ILineMap {
+    x: number
+    y: number
+}
 export interface IBackground extends IBase {
     // TODO: implement any public functions
 }
@@ -11,6 +16,10 @@ export interface IUI extends IBase {
 }
 
 export interface IReelSymbol extends IBase {
+    // TODO: implement any public functions
+}
+
+export interface IReelLine extends IBase {
     // TODO: implement any public functions
 }
 

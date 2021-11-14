@@ -1,6 +1,8 @@
 import 'phaser'
 import { CONSTANTS } from '../../constants/constants'
+import { EventsList } from '../../constants/events'
 import { IUI } from '../../constants/interfaces'
+import { CommonUtils } from '../../utils/CommonUtils'
 
 export class UI extends Phaser.GameObjects.Container implements IUI {
     constructor(scene: Phaser.Scene, x?: number, y?: number) {
@@ -16,7 +18,7 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
 
         const logo = this.scene.add.image(WIDTH / 2, 200, 'logo')
         const btnSpin = this.scene.add
-            .image(WIDTH / 2, HEIGHT / 2, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.SPIN.IDLE)
+            .image(WIDTH / 2, HEIGHT - 100, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.SPIN.IDLE)
             .setInteractive()
             .on('pointerdown', (pointer) => {
                 pointer.event.stopPropagation()
@@ -25,6 +27,7 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
             .on('pointerup', (pointer) => {
                 pointer.event.stopPropagation()
                 btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
+                CommonUtils.emitter.emit(EventsList.startSpin)
             })
             // .on('pointerover', () => {
             //     btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.OVER)
@@ -36,6 +39,37 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
                 btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.IDLE)
             })
 
-        this.add([logo, btnSpin])
+        const btnStop = this.scene.add
+            .image(WIDTH / 2 + 200, HEIGHT - 100, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.STOP.DISABLED)
+            .setInteractive()
+            .on('pointerup', (pointer) => {
+                pointer.event.stopPropagation()
+                CommonUtils.emitter.emit(EventsList.stopSpin)
+            })
+
+        const btnMaxBet = this.scene.add
+            .image(WIDTH / 2 - 200, HEIGHT - 100, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.MAX_BET.IDLE)
+            .setInteractive()
+            .on('pointerup', (pointer) => {
+                pointer.event.stopPropagation()
+                CommonUtils.emitter.emit(EventsList.startWinAnimation)
+            })
+
+        const btnMaxBet2 = this.scene.add
+            .image(WIDTH / 2 - 400, HEIGHT - 100, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.MAX_BET.DISABLED)
+            .setInteractive()
+            .on('pointerup', (pointer) => {
+                pointer.event.stopPropagation()
+                CommonUtils.emitter.emit(EventsList.stopWinAnimation)
+            })
+        const btnMute = this.scene.add
+            .image(WIDTH / 2 + 400, HEIGHT - 100, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.MUTE.IDLE)
+            .setInteractive()
+            .on('pointerup', (pointer) => {
+                pointer.event.stopPropagation()
+                CommonUtils.emitter.emit(EventsList.notify, 'Text message Text message Text')
+            })
+
+        this.add([logo, btnSpin, btnStop, btnMaxBet, btnMaxBet2, btnMute])
     }
 }
