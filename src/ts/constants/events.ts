@@ -17,6 +17,10 @@ export const EventsList = {
     gameOpening: 'gameOpening',
     gameOpened: 'gameOpened',
 
+    setCurrentGameRules: 'setCurrentGameRules',
+    genereteRoundResults: 'genereteRoundResults',
+    roundResults: 'roundResults',
+
     notify: 'notify',
     addBet: 'addBet',
     reBet: 'reBet',

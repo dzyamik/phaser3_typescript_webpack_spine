@@ -3,6 +3,7 @@ import { CONSTANTS } from '../../constants/constants'
 import { EventsList } from '../../constants/events'
 import { IUI } from '../../constants/interfaces'
 import { CommonUtils } from '../../utils/CommonUtils'
+import { IResult } from '../../utils/ResultsGenerator'
 
 export class UI extends Phaser.GameObjects.Container implements IUI {
     constructor(scene: Phaser.Scene, x?: number, y?: number) {
@@ -16,6 +17,10 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
         const WIDTH = this.scene.sys.canvas.width
         const HEIGHT = this.scene.sys.canvas.height
 
+        CommonUtils.emitter.on(EventsList.roundResults, (result: IResult) => {
+            console.log(`Round results: ${JSON.stringify(result)}`)
+        })
+
         const logo = this.scene.add.image(WIDTH / 2, 200, 'logo')
         const btnSpin = this.scene.add
             .image(WIDTH / 2, HEIGHT - 100, CONSTANTS.BUTTON_STATES.TEXTURE, CONSTANTS.BUTTON_STATES.SPIN.IDLE)
@@ -28,6 +33,7 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
                 pointer.event.stopPropagation()
                 btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
                 CommonUtils.emitter.emit(EventsList.startSpin)
+                CommonUtils.emitter.emit(EventsList.genereteRoundResults)
             })
             // .on('pointerover', () => {
             //     btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.OVER)

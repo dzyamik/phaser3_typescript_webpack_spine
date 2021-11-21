@@ -1,7 +1,10 @@
 import { EventsList } from '../constants/events'
 import { CommonUtils } from './CommonUtils'
+import { ResultsGenerator } from './ResultsGenerator'
 
 export class CommunicationService {
+    constructor() {}
+
     static get GAME_NAME(): string {
         return this._GAME_NAME
     }
@@ -10,8 +13,6 @@ export class CommunicationService {
     static set GAME_NAME(value: string) {
         this._GAME_NAME = value
     }
-
-    constructor() {}
 
     private static _USER_INFO: any
     public static get userInfo(): any {
@@ -36,6 +37,14 @@ export class CommunicationService {
 
         CommonUtils.emitter.on(EventsList.updateUserData, CommunicationService.updateUserData)
         CommonUtils.emitter.on(EventsList.updateGameData, CommunicationService.updateGameData)
+
+        CommonUtils.emitter.on(EventsList.setCurrentGameRules, (rules: any) => {
+            ResultsGenerator.setRules(rules)
+        })
+
+        CommonUtils.emitter.on(EventsList.genereteRoundResults, () => {
+            ResultsGenerator.getResults()
+        })
 
         CommunicationService.updateUserData()
         CommunicationService.updateGameData()

@@ -1,5 +1,8 @@
 import 'phaser'
 import { ASSETS } from '../assets'
+import { EventsList } from '../constants/events'
+import { Rules } from '../constants/rules'
+import { CommonUtils } from '../utils/CommonUtils'
 import loader from '../utils/loader'
 
 export default class Loader extends Phaser.Scene {
@@ -36,6 +39,7 @@ export default class Loader extends Phaser.Scene {
     }
 
     create() {
+        CommonUtils.emitter.emit(EventsList.setCurrentGameRules, Rules.main)
         // Start game scene
         this.scene.start('Game')
     }
