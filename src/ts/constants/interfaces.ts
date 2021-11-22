@@ -44,3 +44,12 @@ export interface ITransition<STATE, EVENT> {
     toState: STATE
     cb?: (...args: any[]) => void | Promise<void>
 }
+
+export interface IReelRules {
+    gameType: string
+    winType: string
+    reelsConfig: Array<number>
+    symbols: any
+    symbolsById: any
+    reelstrips: Array<Array<number>>
+}

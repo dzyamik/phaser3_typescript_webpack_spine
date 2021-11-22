@@ -1,5 +1,5 @@
 import { CONSTANTS } from '../../constants/constants'
-import { IReel, IReelSymbol } from '../../constants/interfaces'
+import { IReel, IReelRules, IReelSymbol } from '../../constants/interfaces'
 import { Rules } from '../../constants/rules'
 import { CommonUtils } from '../../utils/CommonUtils'
 import { ReelSymbol } from './ReelSymbol'
@@ -12,21 +12,28 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
     private symToShow: number = 3
     private allSymHeight: number = 450
     private anim: Phaser.Tweens.Tween
-    constructor(scene: Phaser.Scene, x?: number, y?: number) {
+
+    private rules: IReelRules
+    private syms: Array<number>
+    private lastSymbol = 0
+
+    constructor(scene: Phaser.Scene, x: number, y: number, index: number) {
         super(scene, x, y)
+        this.symToShow = Rules.main.reelsConfig[ index ]
         this.allSymHeight = this.symHeight * this.symToShow
+
+        this.rules = Rules.main
+        this.syms = this.rules.reelstrips[ index ]
+
         this.createElements()
     }
 
     private createElements(): void {
-        const mainRules = Rules.main
-        const syms = mainRules.reelstrips[0]
-
         // TODO: create symbpls pool and show addthem one by one durind move animation
-        for (let i = 0; i < syms.length; i++) {
-            const symbol = new ReelSymbol(this.scene, 0, this.allSymHeight - i * this.symHeight, mainRules.symbolsById[syms[i].toString()])
+        for (let i = 0; i < this.syms.length; i++) {
+            const symbol = new ReelSymbol(this.scene, 0, this.allSymHeight - i * this.symHeight, this.rules.symbolsById[ this.syms[ i ].toString() ])
             this.symbols.push(symbol)
-            this.add([symbol])
+            this.add([ symbol ])
         }
 
         this.createMask()
@@ -37,6 +44,21 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         CommonUtils.emitter.on('stopSpin', () => {
             this.startAnimation(false)
         })
+    }
+
+    private addSymbol(x: number, y: number, symbolIndex: number) {
+        symbolIndex %= this.syms.length
+        const symbol = new ReelSymbol(this.scene, x, y, Rules.main.symbolsById[ this.syms[ symbolIndex ].toString() ])
+        this.symbols.push(symbol)
+        this.add(symbol)
+        this.lastSymbol = symbolIndex
+
+        return symbol
+    }
+
+    private shiftSymbols() {
+        this.remove(this.symbols[ 0 ])
+        this.symbols.splice(0, 1)
     }
 
     private createMask(): void {
@@ -52,13 +74,13 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
     // TODO: override animations using symbols pool
     private createAnimation(): void {
         this.anim = this.scene.add.tween({
-            targets: [this],
+            targets: [ this ],
             duration: 1000,
             y: this.y + this.allSymHeight * 2,
             yoyo: true,
             repeat: -1,
             ease: 'Ease.In',
-            onYoyo: () => {},
+            onYoyo: () => { },
         })
         this.anim.stop(0)
     }

@@ -19,7 +19,7 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
     private createElements(): void {
         const SIZE = CONSTANTS.SIZE
         for (let r = 0; r < SIZE.NUM_OF_REELS; r++) {
-            const reel = new Reel(this.scene, SIZE.REELS_INIT_X + r * SIZE.REEL_WIDTH, SIZE.REELS_INIT_Y)
+            const reel = new Reel(this.scene, SIZE.REELS_INIT_X + r * SIZE.REEL_WIDTH, SIZE.REELS_INIT_Y, r)
             this.reels.push(reel)
             this.add([reel])
         }
