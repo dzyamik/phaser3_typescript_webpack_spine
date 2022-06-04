@@ -11,6 +11,13 @@ export const WinType = {
     random: 'random',
 }
 
+export const WinDirection = {
+    leftToRight: 'leftToRight',
+    rightToLeft: 'rightToLeft',
+    bothWays: 'bothWays',
+    anywhereOnField: 'anywhereOnField',
+}
+
 export const Rules = {
     main: {
         gameType: GameType.slot,
@@ -20,48 +27,56 @@ export const Rules = {
             s_10: {
                 id: 0,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_k: {
                 id: 1,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_a: {
                 id: 2,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_cherry: {
                 id: 3,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_grape: {
                 id: 4,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_lemon: {
                 id: 5,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_orange: {
                 id: 6,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_plum: {
                 id: 7,
                 payouts: [0, 0, 0, 0, 0],
+                direction: WinDirection.leftToRight,
                 isWild: true,
                 substituteFor: ['s_orange', 's_10', 's_k', 's_a', 's_cherry', 's_grape', 's_lemon'],
                 isScatter: false,
@@ -69,12 +84,40 @@ export const Rules = {
             s_hen: {
                 id: 8,
                 payouts: [0, 0, 0, 0, 0],
+                direction: WinDirection.bothWays,
                 isWild: false,
                 isScatter: true,
-                triggerGames: {
-                    freespin: [3, 4],
-                    bonus: [2, 5],
-                },
+                triggerGames: [
+                    null,
+                    {
+                        gameType: GameType.freespin,
+                        parameters: {
+                            numberOfGames: 5,
+                            winMultiplier: 1,
+                        },
+                    },
+                    {
+                        gameType: GameType.bonus,
+                        parameters: {
+                            numberOfGames: 1,
+                            winMultiplier: 1,
+                        },
+                    },
+                    {
+                        gameType: GameType.freespin,
+                        parameters: {
+                            numberOfGames: 15,
+                            winMultiplier: 1,
+                        },
+                    },
+                    {
+                        gameType: GameType.bonus,
+                        parameters: {
+                            numberOfGames: 1,
+                            winMultiplier: 3,
+                        },
+                    },
+                ],
             },
         },
         symbolsById: {
@@ -88,7 +131,7 @@ export const Rules = {
             '7': 's_plum',
             '8': 's_hen',
         },
-        // by sumbol ids
+        // by symbol ids
         reelstrips: [
             [0, 4, 2, 5, 2, 2, 5, 6, 7, 8, 6, 4, 3, 2, 2, 4, 5, 5, 6, 1, 1, 1, 0, 0, 0, 8, 6, 5, 4, 3, 3],
             [0, 4, 2, 5, 2, 2, 5, 6, 7, 8, 6, 4, 3, 2, 2, 4, 5, 5, 6, 1, 1, 1, 0, 0, 0, 8, 6, 5, 4, 3, 3],
@@ -138,48 +181,56 @@ export const Rules = {
             s_10: {
                 id: 0,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_k: {
                 id: 1,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_a: {
                 id: 2,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_cherry: {
                 id: 3,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_grape: {
                 id: 4,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_lemon: {
                 id: 5,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_orange: {
                 id: 6,
                 payouts: [0, 2, 4, 10, 15],
+                direction: WinDirection.leftToRight,
                 isWild: false,
                 isScatter: false,
             },
             s_plum: {
                 id: 7,
                 payouts: [0, 0, 0, 0, 0],
+                direction: WinDirection.leftToRight,
                 isWild: true,
                 substituteFor: ['s_orange', 's_10', 's_k', 's_a', 's_cherry', 's_grape', 's_lemon'],
                 isScatter: false,
