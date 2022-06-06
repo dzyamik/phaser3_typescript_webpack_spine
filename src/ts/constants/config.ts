@@ -19,8 +19,8 @@ export const Config = {
         },
     },
     winAnimRanking: {
-        rankingMultiplier: [3, 5, 10, 20],
-        rankingDuration: [2000, 3000, 5000, 10000],
+        rankingMultiplier: [1, 3, 5, 10, 20],
+        rankingDuration: [1500, 2000, 3000, 5000, 10000],
     },
     rules: Rules,
 }
