@@ -175,7 +175,7 @@ export const Rules = {
     },
     freespin: {
         gameType: GameType.freespin,
-        winType: WinType.lines,
+        winType: WinType.ways,
         reelsConfig: [3, 3, 3, 3, 3],
         symbols: {
             s_10: {
