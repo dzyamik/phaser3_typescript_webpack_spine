@@ -235,6 +235,44 @@ export const Rules = {
                 substituteFor: ['s_orange', 's_10', 's_k', 's_a', 's_cherry', 's_grape', 's_lemon'],
                 isScatter: false,
             },
+            s_hen: {
+                id: 8,
+                payouts: [0, 0, 0, 0, 0],
+                direction: WinDirection.anywhereOnField,
+                isWild: false,
+                isScatter: true,
+                triggerGames: [
+                    null,
+                    {
+                        gameType: GameType.freespin,
+                        parameters: {
+                            numberOfGames: 5,
+                            winMultiplier: 1,
+                        },
+                    },
+                    {
+                        gameType: GameType.bonus,
+                        parameters: {
+                            numberOfGames: 1,
+                            winMultiplier: 1,
+                        },
+                    },
+                    {
+                        gameType: GameType.freespin,
+                        parameters: {
+                            numberOfGames: 15,
+                            winMultiplier: 1,
+                        },
+                    },
+                    {
+                        gameType: GameType.bonus,
+                        parameters: {
+                            numberOfGames: 1,
+                            winMultiplier: 3,
+                        },
+                    },
+                ],
+            },
         },
         // by sumbol ids
         reelstrips: [
@@ -244,6 +282,17 @@ export const Rules = {
             [0, 4, 2, 5, 2, 2, 5, 6, 7, 7, 6, 4, 3, 2, 2, 4, 5, 5, 6, 1, 1, 1, 0, 0, 0, 7, 6, 5, 4, 3, 3],
             [0, 4, 2, 5, 2, 2, 5, 6, 7, 7, 6, 4, 3, 2, 2, 4, 5, 5, 6, 1, 1, 1, 0, 0, 0, 7, 6, 5, 4, 3, 3],
         ],
+        symbolsById: {
+            '0': 's_10',
+            '1': 's_k',
+            '2': 's_a',
+            '3': 's_cherry',
+            '4': 's_grape',
+            '5': 's_lemon',
+            '6': 's_orange',
+            '7': 's_plum',
+            '8': 's_hen',
+        },
     },
     bonus: {
         gameType: GameType.bonus,
