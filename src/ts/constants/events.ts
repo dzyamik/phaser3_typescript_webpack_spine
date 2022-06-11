@@ -1,7 +1,4 @@
 export const EventsList = {
-    showPopup: 'showPopup',
-    hidePopup: 'hidePopup',
-
     toPreloading: 'toPreloading',
     preloading: 'preloading',
     toLoading: 'toLoading',
@@ -31,6 +28,10 @@ export const EventsList = {
     errorInfo: 'errorInfo',
     playSound: 'playSound',
 
-    updateUserData: 'updateUserData',
-    updateGameData: 'updateGameData',
+    updateGameConfig: 'updateGameConfig',
+    updateGameState: 'updateGameState',
+    getGameConfig: 'getGameConfig',
+    getGameState: 'getGameState',
+    setGameConfig: 'setGameConfig',
+    setGameState: 'setGameState',
 }
