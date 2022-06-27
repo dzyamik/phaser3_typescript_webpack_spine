@@ -1,55 +1,36 @@
 import { EventsList } from '../constants/events'
 import { CommonUtils } from './CommonUtils'
-import { ResultsGenerator } from './ResultsGenerator'
+import { ServerService } from './ServerService'
 
 export class CommunicationService {
     constructor() {}
 
-    private static _GAME_STATE: any
-    public static get gameState(): any {
-        return CommunicationService._GAME_STATE
+    private static _GAME_DATA: any = {}
+    public static get gameData(): any {
+        return CommunicationService._GAME_DATA
     }
 
-    public static set gameState(state) {
-        CommunicationService._GAME_STATE = state
+    public static set gameData(data: any) {
+        CommunicationService._GAME_DATA = data
     }
 
-    private static _GAME_CONFIG: any
-    public static get gameConfig(): any {
-        return CommunicationService._GAME_CONFIG
-    }
-
-    public static set gameConfig(config: any) {
-        CommunicationService._GAME_CONFIG = config
-    }
-
-    public static initialValidation() {
-        CommonUtils.emitter.on(EventsList.getGameConfig, () => {
-            CommonUtils.emitter.emit(EventsList.updateGameConfig, CommunicationService.gameConfig)
+    public static init() {
+        CommonUtils.emitter.on(EventsList.updateDataRequest, (info?: any) => {
+            ServerService.getData(info)
         })
 
-        CommonUtils.emitter.on(EventsList.setGameConfig, (config: any) => {
-            CommunicationService.gameConfig = config
-            CommonUtils.emitter.emit(EventsList.updateGameConfig, CommunicationService.gameConfig)
+        CommonUtils.emitter.on(EventsList.updateDataResponce, (data: any) => {
+            CommonUtils.extend(CommunicationService.gameData, CommunicationService.gameData, data)
+            CommonUtils.emitter.emit(EventsList.setData, CommunicationService.gameData)
+            console.error(CommunicationService.gameData)
         })
 
-        // TODO: sync it with statemachine
-        CommonUtils.emitter.on(EventsList.getGameState, (stateParameters?: any) => {
-            console.error(stateParameters)
-            // CommonUtils.emitter.emit(EventsList.updateGameState, CommunicationService.gameState)
+        CommonUtils.emitter.once(EventsList.getInitState, () => {
+            CommonUtils.emitter.emit(EventsList.setState, CommunicationService.gameData.state)
         })
 
-        CommonUtils.emitter.on(EventsList.setGameState, (state: any) => {
-            CommunicationService.gameState = state
-            CommonUtils.emitter.emit(EventsList.updateGameState, CommunicationService.gameState)
-        })
-        // CommonUtils.emitter.on(EventsList.setCurrentGameRules, (rules: any) => {
-        // ResultsGenerator.setRules(rules)
-        // })
-
-        // CommonUtils.emitter.on(EventsList.genereteRoundResults, () => {
-        //     ResultsGenerator.getResults()
-        // })
+        // init parameters from server
+        CommonUtils.emitter.emit(EventsList.updateDataRequest)
     }
 
     public static updateGameConfig() {}

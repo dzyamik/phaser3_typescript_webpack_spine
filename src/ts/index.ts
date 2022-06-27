@@ -7,12 +7,14 @@ import Game from './scenes/Game'
 import { CommonUtils } from './utils/CommonUtils'
 import { TRANSITIONS } from './constants/transitions'
 import { CommunicationService } from './utils/CommunicationService'
+import { ServerService } from './utils/ServerService'
 
 const GAME_WIDTH = 1920
 const GAME_HEIGHT = 1080
 
+ServerService.init()
 CommonUtils.init(TRANSITIONS)
-CommunicationService.initialValidation('Prototype')
+CommunicationService.init()
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -24,15 +26,15 @@ const config: Phaser.Types.Core.GameConfig = {
     },
     antialias: true,
     scene: [Preloader, Loader, Game],
-    plugins: {
-        scene: [
-            {
-                key: SpinePlugin.name,
-                plugin: SpinePlugin,
-                mapping: 'spine',
-            },
-        ],
-    },
+    // plugins: {
+    //     scene: [
+    //         {
+    //             key: SpinePlugin.name,
+    //             plugin: SpinePlugin,
+    //             mapping: 'spine',
+    //         },
+    //     ],
+    // },
     autoFocus: true,
     audio: {
         disableWebAudio: false,

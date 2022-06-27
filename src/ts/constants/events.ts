@@ -28,10 +28,10 @@ export const EventsList = {
     errorInfo: 'errorInfo',
     playSound: 'playSound',
 
-    updateGameConfig: 'updateGameConfig',
-    updateGameState: 'updateGameState',
-    getGameConfig: 'getGameConfig',
-    getGameState: 'getGameState',
-    setGameConfig: 'setGameConfig',
-    setGameState: 'setGameState',
+    updateDataRequest: 'updateDataRequest',
+    updateDataResponce: 'updateDataResponce',
+    setData: 'setData',
+    getInitState: 'getInitState',
+    setState: 'setState',
+    setConfig: 'setConfig',
 }

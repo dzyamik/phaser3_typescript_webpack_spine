@@ -1,5 +1,7 @@
 import 'phaser'
+import { EventsList } from '../constants/events'
 import { IBackground, IMessages, IReelManager, IUI } from '../constants/interfaces'
+import { CommonUtils } from '../utils/CommonUtils'
 import { Background } from './components/Background'
 import { Messages } from './components/Messages'
 import { ReelManager } from './components/ReelManager'
@@ -28,11 +30,12 @@ export default class Game extends Phaser.Scene {
         this.messagesContainer = new Messages(this, 0, 0)
 
         this.createFunctionsBind()
-
-        // Remove unused scenes
-        this.scene.remove('Preloader')
-        this.scene.remove('Loader')
+        CommonUtils.emitter.emit(EventsList.gameOpened)
     }
 
-    createFunctionsBind(): void {}
+    createFunctionsBind(): void {
+        CommonUtils.emitter.once(EventsList.setState, () => {
+            CommonUtils.emitter.emit(EventsList.idle)
+        })
+    }
 }

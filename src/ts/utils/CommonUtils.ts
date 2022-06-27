@@ -25,15 +25,6 @@ export class CommonUtils {
         CommonUtils._GAME_HEIGHT = height
     }
 
-    private static _GAME_SCALE: number
-    public static get gameScale() {
-        return CommonUtils._GAME_SCALE
-    }
-
-    public static setGameScale(scale: number) {
-        CommonUtils._GAME_SCALE = scale
-    }
-
     private static _IS_MOBILE: boolean
     public static isMobile(): boolean {
         if (CommonUtils._IS_MOBILE === undefined) {
@@ -63,5 +54,21 @@ export class CommonUtils {
         if (width) {
             CommonUtils.updateTextSize(textObject, width)
         }
+    }
+
+    // TODO: refactor this part
+    // deep merging without overriding objects
+    public static extend(target, arg1?, arg2?): any {
+        for (let i = 1; i < arguments.length; ++i) {
+            let from = arguments[i]
+            if (typeof from !== 'object') continue
+            for (let j in from) {
+                if (from.hasOwnProperty(j)) {
+                    target[j] = typeof from[j] === 'object' ? CommonUtils.extend({}, target[j], from[j]) : from[j]
+                }
+            }
+        }
+
+        return target
     }
 }

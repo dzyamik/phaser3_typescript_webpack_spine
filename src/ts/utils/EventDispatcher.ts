@@ -25,7 +25,7 @@ export class EventDispatcher extends Phaser.Events.EventEmitter implements IEven
 
     emit(event: string | symbol, ...args: any[]): boolean {
         // debugging events
-        console.error(event, args, this._STATE_MACHINE.getState())
+        // console.error(event, args, this._STATE_MACHINE.getState())
         if (this._STATE_MACHINE.can(String(event))) {
             this._STATE_MACHINE.dispatch(String(event)).then(() => {
                 console.log('Transition to State:', this._STATE_MACHINE.getState())

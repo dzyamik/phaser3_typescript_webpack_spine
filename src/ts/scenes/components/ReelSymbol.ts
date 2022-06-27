@@ -30,7 +30,9 @@ export class ReelSymbol extends Phaser.GameObjects.Container implements IReelSym
             yoyo: true,
             repeat: 0,
             ease: 'Ease.In',
-            onYoyo: () => {},
+            onYoyo: () => {
+                // this.anim.stop(0)
+            },
         })
         this.anim.stop(0)
     }

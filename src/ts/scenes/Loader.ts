@@ -1,8 +1,8 @@
 import 'phaser'
 import { ASSETS } from '../assets'
 import { EventsList } from '../constants/events'
-import { Rules } from '../constants/rules'
 import { CommonUtils } from '../utils/CommonUtils'
+import { CommunicationService } from '../utils/CommunicationService'
 import loader from '../utils/loader'
 
 export default class Loader extends Phaser.Scene {
@@ -39,8 +39,15 @@ export default class Loader extends Phaser.Scene {
     }
 
     create() {
-        CommonUtils.emitter.emit(EventsList.setCurrentGameRules, Rules.main)
         // Start game scene
-        this.scene.start('Game')
+        if (CommunicationService.gameData) {
+            CommonUtils.emitter.emit(EventsList.gameOpening)
+            // this.scene.start('Game')
+        } else {
+            CommonUtils.emitter.once(EventsList.setData, () => {
+                CommonUtils.emitter.emit(EventsList.gameOpening)
+                // this.scene.start('Game')
+            })
+        }
     }
 }

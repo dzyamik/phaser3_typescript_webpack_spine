@@ -11,13 +11,19 @@ export const TRANSITIONS = [
     tFrom(States.PRELOADING, EventsList.toLoading, States.LOADING, () => {
         CommonUtils.emitter.emit(EventsList.loading)
         game.scene.start('Loader')
+        game.scene.remove('Preloader')
     }),
     tFrom(States.LOADING, EventsList.gameOpening, States.GAME_OPENING, () => {
         game.scene.start('Game')
     }),
-    tFrom(States.GAME_OPENING, EventsList.gameOpened, States.GAME_OPENED, () => {}),
+    tFrom(States.GAME_OPENING, EventsList.gameOpened, States.GAME_OPENED, () => {
+        game.scene.remove('Loader')
+        CommonUtils.emitter.emit(EventsList.getInitState)
+    }),
 
-    tFrom(States.GAME_OPENED, EventsList.idle, States.IDLE, () => {}),
+    tFrom(States.GAME_OPENED, EventsList.idle, States.IDLE, () => {
+        // Init state is set
+    }),
 
     // In gema transitions
     tFrom(States.IDLE, EventsList.startSpin, States.START_SPIN, () => {}),

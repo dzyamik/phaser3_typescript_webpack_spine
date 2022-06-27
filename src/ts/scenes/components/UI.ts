@@ -20,6 +20,9 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
         CommonUtils.emitter.on(EventsList.roundResults, (result: IResult) => {
             console.log(`Round results: ${JSON.stringify(result)}`)
         })
+        CommonUtils.emitter.on(EventsList.setState, (newState) => {
+            console.error(newState)
+        })
 
         const logo = this.scene.add.image(WIDTH / 2, 200, 'logo')
         const btnSpin = this.scene.add
@@ -33,7 +36,7 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
                 pointer.event.stopPropagation()
                 btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
                 CommonUtils.emitter.emit(EventsList.startSpin)
-                CommonUtils.emitter.emit(EventsList.genereteRoundResults)
+                // CommonUtils.emitter.emit(EventsList.genereteRoundResults)
             })
             // .on('pointerover', () => {
             //     btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.OVER)

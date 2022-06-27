@@ -1,8 +1,8 @@
 import { CONSTANTS } from '../../constants/constants'
 import { EventsList } from '../../constants/events'
 import { ILineMap, IReel, IReelLine, IReelManager } from '../../constants/interfaces'
-import { Rules } from '../../constants/rules'
 import { CommonUtils } from '../../utils/CommonUtils'
+import { CommunicationService } from '../../utils/CommunicationService'
 import { Reel } from './Reel'
 import { ReelLine } from './ReelLine'
 
@@ -12,11 +12,18 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
 
     constructor(scene: Phaser.Scene, x?: number, y?: number) {
         super(scene, x, y)
-        this.createElements()
-        this.scene.add.existing(this)
+        if (CommunicationService.gameData) {
+            this.createElements(CommunicationService.gameData.config.rules)
+            this.scene.add.existing(this)
+        } else {
+            CommonUtils.emitter.once(EventsList.setData, (data) => {
+                this.createElements(data.config.rules)
+                this.scene.add.existing(this)
+            })
+        }
     }
 
-    private createElements(): void {
+    private createElements(rules): void {
         const SIZE = CONSTANTS.SIZE
         for (let r = 0; r < SIZE.NUM_OF_REELS; r++) {
             const reel = new Reel(this.scene, SIZE.REELS_INIT_X + r * SIZE.REEL_WIDTH, SIZE.REELS_INIT_Y)
@@ -25,7 +32,7 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
         }
 
         // TODO: add mechanism for showing lines on win event all together and one by one
-        const linesPoints = Rules.main.lines
+        const linesPoints = rules.main.lines
         const linesMap: Array<Array<ILineMap>> = []
         for (let i = 0; i < linesPoints.length; i++) {
             linesMap.push([])
