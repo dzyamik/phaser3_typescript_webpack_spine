@@ -26,7 +26,7 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
     private createElements(rules): void {
         const SIZE = CONSTANTS.SIZE
         for (let r = 0; r < SIZE.NUM_OF_REELS; r++) {
-            const reel = new Reel(this.scene, SIZE.REELS_INIT_X + r * SIZE.REEL_WIDTH, SIZE.REELS_INIT_Y)
+            const reel = new Reel(this.scene, rules, r, SIZE.REELS_INIT_X + r * SIZE.REEL_WIDTH, SIZE.REELS_INIT_Y)
             this.reels.push(reel)
             this.add([reel])
         }
@@ -39,7 +39,7 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
             for (let j = 0; j < linesPoints[i].length; j++) {
                 linesMap[i].push({
                     x: SIZE.REELS_INIT_X + SIZE.REEL_WIDTH / 2 + j * SIZE.REEL_WIDTH,
-                    y: SIZE.REELS_INIT_Y + SIZE.REEL_HEIGHT / 2 + linesPoints[i][j] * SIZE.REEL_HEIGHT,
+                    y: SIZE.REELS_INIT_Y + SIZE.SYM_HEIGHT / 2 + linesPoints[i][j] * SIZE.SYM_HEIGHT,
                 })
             }
             const line = new ReelLine(this.scene, 0, 0, i, linesMap[i]).setVisible(false)

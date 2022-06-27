@@ -33,7 +33,10 @@ export const CONSTANTS = {
         REELS_INIT_X: 350,
         REELS_INIT_Y: 240,
         REEL_WIDTH: 250,
-        REEL_HEIGHT: 218,
+        SYM_HEIGHT: 218,
         NUM_OF_REELS: 5,
     },
+    DELAY: 100,
+    SYMBOL_DURATION: 100,
+    REEL_DURATION: 2000,
 }
