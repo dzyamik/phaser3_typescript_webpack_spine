@@ -9,6 +9,7 @@ import { ReelLine } from './ReelLine'
 export class ReelManager extends Phaser.GameObjects.Container implements IReelManager {
     private reels: Array<IReel> = []
     private lines: Array<IReelLine> = []
+    private rules: any
 
     constructor(scene: Phaser.Scene, x?: number, y?: number) {
         super(scene, x, y)
@@ -24,6 +25,7 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
     }
 
     private createElements(rules): void {
+        this.rules = rules
         const SIZE = CONSTANTS.SIZE
         for (let r = 0; r < SIZE.NUM_OF_REELS; r++) {
             const reel = new Reel(this.scene, rules, r, SIZE.REELS_INIT_X + r * SIZE.REEL_WIDTH, SIZE.REELS_INIT_Y)
@@ -53,6 +55,16 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
 
         CommonUtils.emitter.on(EventsList.stopWinAnimation, () => {
             this.stopWinAnimation()
+        })
+
+        CommonUtils.emitter.on(EventsList.stopSpin, (data) => {
+            // TODO: refactor it to correct indexes from results
+            console.error('Data from server:', data)
+            for (let r = 0; r < this.reels.length; r++) {
+                const stopIndex = Math.floor(Math.random() * this.rules.main.reelstrips[r].length)
+                // console.error(stopIndex)
+                this.reels[r].stopReel(stopIndex)
+            }
         })
     }
 

@@ -39,4 +39,5 @@ export const EventsList = {
     quickSpin: 'quickSpin',
     // quick stopping during spin
     quickStop: 'quickStop',
+    stopReel: 'stopReel',
 }

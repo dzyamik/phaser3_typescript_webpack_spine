@@ -3,6 +3,7 @@ import { CommonUtils } from './CommonUtils'
 import { ServerService } from './ServerService'
 
 export class CommunicationService {
+    private static WAITINT_FOR: string = EventsList.setData
     constructor() {}
 
     private static _GAME_DATA: any = {}
@@ -20,13 +21,20 @@ export class CommunicationService {
         })
 
         CommonUtils.emitter.on(EventsList.updateDataResponce, (data: any) => {
-            CommonUtils.extend(CommunicationService.gameData, CommunicationService.gameData, data)
-            CommonUtils.emitter.emit(EventsList.setData, CommunicationService.gameData)
+            CommonUtils.extend(CommunicationService.gameData, data)
+            CommonUtils.emitter.emit(CommunicationService.WAITINT_FOR, CommunicationService.gameData)
             console.error(CommunicationService.gameData)
         })
 
         CommonUtils.emitter.once(EventsList.getInitState, () => {
-            CommonUtils.emitter.emit(EventsList.setState, CommunicationService.gameData.state)
+            CommunicationService.WAITINT_FOR = EventsList.setState
+            CommonUtils.emitter.emit(CommunicationService.WAITINT_FOR, CommunicationService.gameData.state)
+        })
+
+        CommonUtils.emitter.on(EventsList.startSpin, (info: any) => {
+            console.error(EventsList.startSpin, info)
+            CommunicationService.WAITINT_FOR = EventsList.stopSpin
+            ServerService.getData(info)
         })
 
         // init parameters from server

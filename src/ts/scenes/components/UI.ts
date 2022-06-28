@@ -6,6 +6,8 @@ import { CommonUtils } from '../../utils/CommonUtils'
 import { IResult } from '../../utils/ResultsGenerator'
 
 export class UI extends Phaser.GameObjects.Container implements IUI {
+    private bet: number = 10
+    private lines: number = 25
     constructor(scene: Phaser.Scene, x?: number, y?: number) {
         super(scene, x, y)
         this.createElements()
@@ -38,7 +40,10 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
                     CommonUtils.emitter.emit(EventsList.quickStop)
                 } else {
                     btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
-                    CommonUtils.emitter.emit(EventsList.startSpin)
+                    CommonUtils.emitter.emit(EventsList.startSpin, {
+                        bet: this.bet,
+                        lines: this.lines,
+                    })
                 }
                 // btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
                 // CommonUtils.emitter.emit(EventsList.startSpin)
@@ -83,8 +88,8 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
             .setInteractive()
             .on('pointerup', (pointer) => {
                 pointer.event.stopPropagation()
-                // CommonUtils.emitter.emit(EventsList.notify, 'Text message Text message Text')
-                CommonUtils.emitter.emit(EventsList.stopSpin)
+                CommonUtils.emitter.emit(EventsList.notify, 'Text message Text message Text')
+                // CommonUtils.emitter.emit(EventsList.stopSpin)
             })
 
         this.add([logo, btnSpin, btnStop, btnMaxBet, btnMaxBet2, btnMute])

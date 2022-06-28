@@ -1,6 +1,7 @@
 import { ITransition } from '../constants/interfaces'
 import { States } from '../constants/states'
 import { EventDispatcher } from './EventDispatcher'
+import { merge } from 'lodash'
 
 export class CommonUtils {
     private static _EMITTER = null
@@ -58,17 +59,19 @@ export class CommonUtils {
 
     // TODO: refactor this part
     // deep merging without overriding objects
-    public static extend(target, arg1?, arg2?): any {
-        for (let i = 1; i < arguments.length; ++i) {
-            let from = arguments[i]
-            if (typeof from !== 'object') continue
-            for (let j in from) {
-                if (from.hasOwnProperty(j)) {
-                    target[j] = typeof from[j] === 'object' ? CommonUtils.extend({}, target[j], from[j]) : from[j]
-                }
-            }
-        }
+    public static extend(target, other) {
+        // for (let i = 1; i < arguments.length; ++i) {
+        //     let from = arguments[i]
+        //     if (typeof from !== 'object') continue
+        //     for (let j in from) {
+        //         if (from.hasOwnProperty(j)) {
+        //             target[j] = typeof from[j] === 'object' ? CommonUtils.extend({}, target[j], from[j]) : from[j]
+        //         }
+        //     }
+        // }
+        // console.error(target, other)
+        merge(target, other)
 
-        return target
+        // return target
     }
 }

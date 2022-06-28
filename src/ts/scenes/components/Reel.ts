@@ -1,7 +1,6 @@
 import { CONSTANTS } from '../../constants/constants'
 import { EventsList } from '../../constants/events'
 import { IReel, IReelSymbol } from '../../constants/interfaces'
-import { Rules } from '../../constants/rules'
 import { CommonUtils } from '../../utils/CommonUtils'
 import { ReelSymbol } from './ReelSymbol'
 const SIZE = CONSTANTS.SIZE
@@ -33,8 +32,7 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
     constructor(scene: Phaser.Scene, rules, reelIndex, x?: number, y?: number) {
         super(scene, x, y)
         this.allSymHeight = this.symHeight * this.symToShow
-        // this.rules = rules
-        this.rules = Rules
+        this.rules = rules
         this.reelIndex = reelIndex
         this.mainRules = this.rules.main
         this.createElements()
@@ -56,18 +54,13 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         this.createMask()
         this.createAnimation()
         CommonUtils.emitter.on(EventsList.startSpin, () => {
-            this.startAnimation(true)
+            // console.error(this.reelIndex, EventsList.startSpin)
+            this.startAnimation(true, true)
         })
-        CommonUtils.emitter.on(EventsList.stopSpin, () => {
-            // TODO: refactor it to correct indexes from results
-            this.stopIndex = Math.floor(Math.random() * this.reelStrip.length)
-            console.error(
-                this.reelIndex,
-                this.stopIndex,
-                this.reelStrip[this.stopIndex],
-                this.mainRules.symbolsById[this.reelStrip[this.stopIndex].toString()]
-            )
-        })
+        // CommonUtils.emitter.on(EventsList.stopReel, (data) => {
+        //     if (data && )
+        //     this.stopIndex = stopIndex
+        // })
 
         CommonUtils.emitter.on(EventsList.quickSpin, () => {
             this.isQuickSpin = !this.isQuickSpin
@@ -94,6 +87,10 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         })
 
         this.setSymPositions(this.currentIndex)
+    }
+
+    public stopReel(stopIndex: number) {
+        this.stopIndex = stopIndex
     }
 
     private setSymPositions(index: number): void {
@@ -205,10 +202,10 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         this.anim = this.scene.add.tween({
             // 1 is to set correct positions
             delay: 1 + CONSTANTS.DELAY * this.reelIndex,
+            paused: true,
             targets: this.symbolsContainer,
             duration: this.currentSymbolAnimationDuration,
             y: this.symHeight,
-            // yoyo: true,
             repeat: -1,
             ease: 'Ease.In',
             onRepeat: () => {
@@ -220,15 +217,25 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
                 this.updateDuration()
             },
         })
-        this.anim.stop(0)
+        // this.anim.stop(0)
     }
 
-    private startAnimation(toStart: boolean = true): void {
+    private removeAnimation(): void {
+        // this.anim.resetTweenData(false)
+        // this.anim.destroy()
+        this.anim.remove()
+    }
+
+    private startAnimation(toStart: boolean = true, fromStart: boolean = false): void {
         // this.anim.duration = this.currentSymbolAnimationDuration
         if (toStart) {
+            if (fromStart) {
+                this.removeAnimation()
+                this.createAnimation()
+            }
             this.anim.play()
         } else {
-            this.anim.stop(0)
+            this.anim.stop()
         }
     }
 }

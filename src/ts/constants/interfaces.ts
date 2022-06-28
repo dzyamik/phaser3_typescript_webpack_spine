@@ -25,6 +25,7 @@ export interface IReelLine extends IBase {
 
 export interface IReel extends IBase {
     // TODO: implement any public functions
+    stopReel: Function
 }
 
 export interface IReelManager extends IBase {
