@@ -37,6 +37,9 @@ export const CONSTANTS = {
         NUM_OF_REELS: 5,
     },
     DELAY: 100,
-    SYMBOL_DURATION: 100,
+    // speed of moving 1 symbol
+    SYMBOL_DURATION: 150,
+    SYMBOL_DURATION_QUICK: 50,
     REEL_DURATION: 2000,
+    REEL_DURATION_QUICK: 500,
 }

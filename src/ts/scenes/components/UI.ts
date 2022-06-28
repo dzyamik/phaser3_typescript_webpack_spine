@@ -34,8 +34,14 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
             })
             .on('pointerup', (pointer) => {
                 pointer.event.stopPropagation()
-                btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
-                CommonUtils.emitter.emit(EventsList.startSpin)
+                if (btnSpin.frame.name === CONSTANTS.BUTTON_STATES.SPIN.DISABLED) {
+                    CommonUtils.emitter.emit(EventsList.quickStop)
+                } else {
+                    btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
+                    CommonUtils.emitter.emit(EventsList.startSpin)
+                }
+                // btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
+                // CommonUtils.emitter.emit(EventsList.startSpin)
                 // CommonUtils.emitter.emit(EventsList.genereteRoundResults)
             })
             // .on('pointerover', () => {
@@ -53,7 +59,8 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
             .setInteractive()
             .on('pointerup', (pointer) => {
                 pointer.event.stopPropagation()
-                CommonUtils.emitter.emit(EventsList.stopSpin)
+                // CommonUtils.emitter.emit(EventsList.stopSpin)
+                CommonUtils.emitter.emit(EventsList.quickSpin)
             })
 
         const btnMaxBet = this.scene.add
@@ -76,7 +83,8 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
             .setInteractive()
             .on('pointerup', (pointer) => {
                 pointer.event.stopPropagation()
-                CommonUtils.emitter.emit(EventsList.notify, 'Text message Text message Text')
+                // CommonUtils.emitter.emit(EventsList.notify, 'Text message Text message Text')
+                CommonUtils.emitter.emit(EventsList.stopSpin)
             })
 
         this.add([logo, btnSpin, btnStop, btnMaxBet, btnMaxBet2, btnMute])

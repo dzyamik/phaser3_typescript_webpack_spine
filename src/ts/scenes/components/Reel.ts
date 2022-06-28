@@ -24,9 +24,11 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
     private currentIndex: number = 0
     private reelIndex: number = null
     private currentAnimationDuration: number = CONSTANTS.REEL_DURATION
+    private currentSymbolAnimationDuration: number = CONSTANTS.SYMBOL_DURATION
     private stopIndex: number = null
     private stopSymbolsNumber: number = null
     private allowStopping: boolean = false
+    private isQuickSpin: boolean = false
 
     constructor(scene: Phaser.Scene, rules, reelIndex, x?: number, y?: number) {
         super(scene, x, y)
@@ -65,6 +67,30 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
                 this.reelStrip[this.stopIndex],
                 this.mainRules.symbolsById[this.reelStrip[this.stopIndex].toString()]
             )
+        })
+
+        CommonUtils.emitter.on(EventsList.quickSpin, () => {
+            this.isQuickSpin = !this.isQuickSpin
+
+            console.log('QuickSpin:', this.isQuickSpin)
+
+            if (!this.isQuickSpin) {
+                this.currentAnimationDuration = this.currentAnimationDuration - CONSTANTS.REEL_DURATION_QUICK + CONSTANTS.REEL_DURATION
+                this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION
+            } else {
+                this.currentAnimationDuration = this.currentAnimationDuration - CONSTANTS.REEL_DURATION + CONSTANTS.REEL_DURATION_QUICK
+                this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION_QUICK
+            }
+        })
+
+        CommonUtils.emitter.on(EventsList.quickStop, () => {
+            if (this.isQuickSpin) {
+                this.currentAnimationDuration = 0
+                this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION_QUICK
+            } else {
+                this.currentAnimationDuration = this.currentAnimationDuration - CONSTANTS.REEL_DURATION + CONSTANTS.REEL_DURATION_QUICK
+                this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION
+            }
         })
 
         this.setSymPositions(this.currentIndex)
@@ -139,7 +165,7 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
     }
 
     private updateDuration() {
-        this.currentAnimationDuration -= CONSTANTS.SYMBOL_DURATION
+        this.currentAnimationDuration -= this.currentSymbolAnimationDuration
 
         if (this.currentAnimationDuration <= 0 && this.stopIndex !== null) {
             this.allowStopping = true
@@ -152,7 +178,8 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
             if (this.stopSymbolsNumber <= 0) {
                 this.stopSymbolsNumber = null
                 this.startAnimation(false)
-                this.currentAnimationDuration = CONSTANTS.REEL_DURATION
+                this.currentAnimationDuration = this.isQuickSpin ? CONSTANTS.REEL_DURATION_QUICK : CONSTANTS.REEL_DURATION
+                this.currentSymbolAnimationDuration = this.isQuickSpin ? CONSTANTS.SYMBOL_DURATION_QUICK : CONSTANTS.SYMBOL_DURATION
                 this.allowStopping = false
                 this.stopIndex = null
             } else {
@@ -179,12 +206,13 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
             // 1 is to set correct positions
             delay: 1 + CONSTANTS.DELAY * this.reelIndex,
             targets: this.symbolsContainer,
-            duration: CONSTANTS.SYMBOL_DURATION,
+            duration: this.currentSymbolAnimationDuration,
             y: this.symHeight,
             // yoyo: true,
             repeat: -1,
             ease: 'Ease.In',
             onRepeat: () => {
+                this.anim.setTimeScale(CONSTANTS.SYMBOL_DURATION / this.currentSymbolAnimationDuration)
                 this.incrementCurrentIndex()
                 this.symbolsContainer.setY(0)
                 this.hideSymbols()
@@ -196,6 +224,7 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
     }
 
     private startAnimation(toStart: boolean = true): void {
+        // this.anim.duration = this.currentSymbolAnimationDuration
         if (toStart) {
             this.anim.play()
         } else {

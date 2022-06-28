@@ -34,4 +34,9 @@ export const EventsList = {
     getInitState: 'getInitState',
     setState: 'setState',
     setConfig: 'setConfig',
+
+    // set/unset quick spin mode
+    quickSpin: 'quickSpin',
+    // quick stopping during spin
+    quickStop: 'quickStop',
 }
