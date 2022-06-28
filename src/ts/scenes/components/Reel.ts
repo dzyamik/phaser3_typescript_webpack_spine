@@ -58,9 +58,7 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         })
         CommonUtils.emitter.on(EventsList.stopSpin, () => {
             // TODO: refactor it to correct indexes from results
-            // this.startAnimation(false)
             this.stopIndex = Math.floor(Math.random() * this.reelStrip.length)
-            this.allowStopping = true
             console.error(
                 this.reelIndex,
                 this.stopIndex,
@@ -142,9 +140,8 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
 
     private updateDuration() {
         this.currentAnimationDuration -= CONSTANTS.SYMBOL_DURATION
-        // console.error(this.currentAnimationDuration, this.anim)
-        // if (this.stopIndex !== null) {
-        if (this.currentAnimationDuration <= 0) {
+
+        if (this.currentAnimationDuration <= 0 && this.stopIndex !== null) {
             this.allowStopping = true
         }
 
@@ -156,6 +153,8 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
                 this.stopSymbolsNumber = null
                 this.startAnimation(false)
                 this.currentAnimationDuration = CONSTANTS.REEL_DURATION
+                this.allowStopping = false
+                this.stopIndex = null
             } else {
                 this.startAnimation(true)
             }
