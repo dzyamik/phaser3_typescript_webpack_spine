@@ -54,13 +54,8 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         this.createMask()
         this.createAnimation()
         CommonUtils.emitter.on(EventsList.startSpin, () => {
-            // console.error(this.reelIndex, EventsList.startSpin)
             this.startAnimation(true, true)
         })
-        // CommonUtils.emitter.on(EventsList.stopReel, (data) => {
-        //     if (data && )
-        //     this.stopIndex = stopIndex
-        // })
 
         CommonUtils.emitter.on(EventsList.quickSpin, () => {
             this.isQuickSpin = !this.isQuickSpin
@@ -77,13 +72,8 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
         })
 
         CommonUtils.emitter.on(EventsList.quickStop, () => {
-            if (this.isQuickSpin) {
-                this.currentAnimationDuration = 0
-                this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION_QUICK
-            } else {
-                this.currentAnimationDuration = this.currentAnimationDuration - CONSTANTS.REEL_DURATION + CONSTANTS.REEL_DURATION_QUICK
-                this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION
-            }
+            this.currentAnimationDuration = this.currentAnimationDuration - CONSTANTS.REEL_DURATION + CONSTANTS.REEL_DURATION_QUICK
+            this.currentSymbolAnimationDuration = CONSTANTS.SYMBOL_DURATION_QUICK
         })
 
         this.setSymPositions(this.currentIndex)
@@ -179,6 +169,9 @@ export class Reel extends Phaser.GameObjects.Container implements IReel {
                 this.currentSymbolAnimationDuration = this.isQuickSpin ? CONSTANTS.SYMBOL_DURATION_QUICK : CONSTANTS.SYMBOL_DURATION
                 this.allowStopping = false
                 this.stopIndex = null
+                if (this.reelIndex === this.mainRules.reelstrips.length - 1) {
+                    CommonUtils.emitter.emit(EventsList.spinStopped)
+                }
             } else {
                 this.startAnimation(true)
             }

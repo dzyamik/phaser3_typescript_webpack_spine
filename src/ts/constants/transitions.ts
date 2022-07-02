@@ -1,5 +1,6 @@
 import game from '..'
 import { CommonUtils } from '../utils/CommonUtils'
+import { ServerService } from '../utils/ServerService'
 import { tFrom } from '../utils/StateMachine'
 import { EventsList } from './events'
 import { States } from './states'
@@ -26,10 +27,21 @@ export const TRANSITIONS = [
     }),
 
     // In gema transitions
-    tFrom(States.IDLE, EventsList.startSpin, States.START_SPIN, () => {}),
-    tFrom(States.START_SPIN, EventsList.spinning, States.SPINNING, () => {}),
-    tFrom(States.SPINNING, EventsList.stopSpin, States.STOP_SPIN, () => {}),
-    tFrom(States.STOP_SPIN, EventsList.spinStopped, States.SPIN_STOPPED, () => {}),
-    tFrom(States.SPIN_STOPPED, EventsList.payout, States.PAYOUT, () => {}),
+    tFrom(States.IDLE, EventsList.startSpin, States.START_SPIN, (info: any) => {
+        CommonUtils.emitter.emit(EventsList.spinning, info)
+    }),
+    tFrom(States.START_SPIN, EventsList.spinning, States.SPINNING, (info: any) => {
+        ServerService.getData(info)
+    }),
+    tFrom(States.SPINNING, EventsList.stopSpin, States.STOP_SPIN, (info: any) => {
+        console.error(info)
+    }),
+    tFrom(States.STOP_SPIN, EventsList.spinStopped, States.SPIN_STOPPED, () => {
+        CommonUtils.emitter.emit(EventsList.payout)
+    }),
+    tFrom(States.SPIN_STOPPED, EventsList.payout, States.PAYOUT, () => {
+        // TODO: add some logic here
+        CommonUtils.emitter.emit(EventsList.idle)
+    }),
     tFrom(States.PAYOUT, EventsList.idle, States.IDLE, () => {}),
 ]

@@ -23,7 +23,7 @@ export class CommunicationService {
         CommonUtils.emitter.on(EventsList.updateDataResponce, (data: any) => {
             CommonUtils.extend(CommunicationService.gameData, data)
             CommonUtils.emitter.emit(CommunicationService.WAITINT_FOR, CommunicationService.gameData)
-            console.error(CommunicationService.gameData)
+            // console.error(CommunicationService.gameData)
         })
 
         CommonUtils.emitter.once(EventsList.getInitState, () => {
@@ -31,10 +31,8 @@ export class CommunicationService {
             CommonUtils.emitter.emit(CommunicationService.WAITINT_FOR, CommunicationService.gameData.state)
         })
 
-        CommonUtils.emitter.on(EventsList.startSpin, (info: any) => {
-            console.error(EventsList.startSpin, info)
+        CommonUtils.emitter.on(EventsList.startSpin, () => {
             CommunicationService.WAITINT_FOR = EventsList.stopSpin
-            ServerService.getData(info)
         })
 
         // init parameters from server

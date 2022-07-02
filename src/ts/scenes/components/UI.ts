@@ -2,6 +2,7 @@ import 'phaser'
 import { CONSTANTS } from '../../constants/constants'
 import { EventsList } from '../../constants/events'
 import { IUI } from '../../constants/interfaces'
+import { States } from '../../constants/states'
 import { CommonUtils } from '../../utils/CommonUtils'
 import { IResult } from '../../utils/ResultsGenerator'
 
@@ -36,14 +37,16 @@ export class UI extends Phaser.GameObjects.Container implements IUI {
             })
             .on('pointerup', (pointer) => {
                 pointer.event.stopPropagation()
-                if (btnSpin.frame.name === CONSTANTS.BUTTON_STATES.SPIN.DISABLED) {
-                    CommonUtils.emitter.emit(EventsList.quickStop)
-                } else {
+                const state = CommonUtils.emitter.getState()
+
+                if (state === States.IDLE) {
                     btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
                     CommonUtils.emitter.emit(EventsList.startSpin, {
                         bet: this.bet,
                         lines: this.lines,
                     })
+                } else {
+                    CommonUtils.emitter.emit(EventsList.quickStop)
                 }
                 // btnSpin.setFrame(CONSTANTS.BUTTON_STATES.SPIN.DISABLED)
                 // CommonUtils.emitter.emit(EventsList.startSpin)
