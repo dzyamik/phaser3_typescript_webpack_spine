@@ -42,6 +42,7 @@ export class ServerService {
     }
 
     public static getData(info?: any) {
+        console.error('getData', info)
         if (info) {
             ServerService.processNewState(info)
         } else {
@@ -50,6 +51,7 @@ export class ServerService {
     }
 
     private static processNewState(info) {
+        console.error('processNewState', info)
         // config: {
         //     balance: 1000,
         //     bet: 10,

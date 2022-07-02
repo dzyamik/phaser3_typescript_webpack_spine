@@ -1,5 +1,6 @@
 import game from '..'
 import { CommonUtils } from '../utils/CommonUtils'
+import { CommunicationService } from '../utils/CommunicationService'
 import { ServerService } from '../utils/ServerService'
 import { tFrom } from '../utils/StateMachine'
 import { EventsList } from './events'
@@ -27,14 +28,14 @@ export const TRANSITIONS = [
     }),
 
     // In gema transitions
-    tFrom(States.IDLE, EventsList.startSpin, States.START_SPIN, (info: any) => {
-        CommonUtils.emitter.emit(EventsList.spinning, info)
+    tFrom(States.IDLE, EventsList.startSpin, States.START_SPIN, () => {
+        CommonUtils.emitter.emit(EventsList.spinning)
     }),
-    tFrom(States.START_SPIN, EventsList.spinning, States.SPINNING, (info: any) => {
-        ServerService.getData(info)
+    tFrom(States.START_SPIN, EventsList.spinning, States.SPINNING, () => {
+        ServerService.getData(CommunicationService.dataToProcess)
     }),
-    tFrom(States.SPINNING, EventsList.stopSpin, States.STOP_SPIN, (info: any) => {
-        console.error(info)
+    tFrom(States.SPINNING, EventsList.stopSpin, States.STOP_SPIN, () => {
+        console.error(CommunicationService.gameData)
     }),
     tFrom(States.STOP_SPIN, EventsList.spinStopped, States.SPIN_STOPPED, () => {
         CommonUtils.emitter.emit(EventsList.payout)

@@ -4,6 +4,11 @@ import { ServerService } from './ServerService'
 
 export class CommunicationService {
     private static WAITINT_FOR: string = EventsList.setData
+    private static _DATA_TO_PROCESS: any
+    public static get dataToProcess(): any {
+        return CommunicationService._DATA_TO_PROCESS
+    }
+
     constructor() {}
 
     private static _GAME_DATA: any = {}
@@ -31,7 +36,8 @@ export class CommunicationService {
             CommonUtils.emitter.emit(CommunicationService.WAITINT_FOR, CommunicationService.gameData.state)
         })
 
-        CommonUtils.emitter.on(EventsList.startSpin, () => {
+        CommonUtils.emitter.on(EventsList.startSpin, (info: any) => {
+            CommunicationService._DATA_TO_PROCESS = info
             CommunicationService.WAITINT_FOR = EventsList.stopSpin
         })
 
