@@ -60,8 +60,11 @@ export class ReelManager extends Phaser.GameObjects.Container implements IReelMa
         CommonUtils.emitter.on(EventsList.stopSpin, (data) => {
             // TODO: refactor it to correct indexes from results
             // console.error('Data from server:', data)
-            for (let r = 0; r < this.reels.length; r++) {
-                const stopIndex = Math.floor(Math.random() * this.rules.main.reelstrips[r].length)
+            // console.error('data.symbolIndexOnReels', data.state.config.symbolIndexOnReels)
+            const indexes = data.state.config.symbolIndexOnReels
+            for (let r = 0; r < indexes.length; r++) {
+                const stopIndex = indexes[r]
+                // const stopIndex = Math.floor(Math.random() * this.rules.main.reelstrips[r].length)
                 this.reels[r].stopReel(stopIndex)
             }
             // CommonUtils.emitter.emit(CommunicationService.WAITINT_FOR, CommunicationService.gameData.state)
